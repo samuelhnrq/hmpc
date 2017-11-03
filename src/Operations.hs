@@ -1,4 +1,5 @@
 module Operations(
+    MPDConn,
     next,
     prev,
     buffSize
@@ -26,4 +27,4 @@ next :: MPDConn -> IO Bool
 next = exec "next"
 
 prev :: MPDConn -> IO Bool
-prev = exec "prev"
+prev = exec "previous"

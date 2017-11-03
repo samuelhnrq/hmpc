@@ -10,12 +10,16 @@ import Operations
 main :: IO ()
 main = do
     -- TODO: Configurable host and port
-    connect "localhost" "6600" $ \(connSocket, _) -> do
-      mpdVer <- recv connSocket buffSize
+    connect "localhost" "6600" $ \(mpdConn, _) -> do
+      mpdVer <- recv mpdConn buffSize
       when (isNothing mpdVer) $ die "Couldn't connect to server"
-      putStrLn $ "Connected successfully the server responded with " ++ (init . unpack . fromJust) mpdVer
       args <- getArgs
-      case head args of "next" -> next connSocket
-                        "prev" -> prev connSocket
-                        _ -> do putStrLn "Command not found!"; return False
+      when (null args) $ die "Type the desired command"
+      handleCmd (head args) (tail args) mpdConn
       return ()
+
+handleCmd :: String -> [String] -> MPDConn -> IO Bool
+handleCmd "next" _ = next
+handleCmd "prev" _ = prev
+handleCmd "previous" _ = handleCmd "prev" []
+handleCmd _ _ = \_ -> return False
