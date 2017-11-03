@@ -15,13 +15,16 @@ cabal-version:       >=1.10
 
 library
   hs-source-dirs:      src
-  exposed-modules:     Operations
-  build-depends:       base >= 4.7 && < 5
+  exposed-modules:     Hmpc.Operations
+  build-depends:       base >= 4.9 && < 5
                      , network-simple == 0.4.0.5
                      , bytestring == 0.10.8.1
+                     , ini == 0.3.5
+                     , text == 1.2.2.2
+                     , containers == 0.5.7.1
   default-language:    Haskell2010
 
-executable hmpc-exe
+executable hmpc
   hs-source-dirs:      app
   main-is:             Main.hs
   ghc-options:         -threaded -rtsopts -with-rtsopts=-N
