@@ -4,10 +4,10 @@ version:             0.1.0.0
 -- description:
 homepage:            https://github.com/samosaara/hmpc#readme
 license:             BSD3
-license-file:        LICENSE
+license-file:        COPYING
 author:              Samuel Henrique Oliveira da Silva
 maintainer:          samosaara@gmail.com
-copyright:           MIT
+copyright:           Copyright Samuel Henrique Oliveira da Silva (c) 2017
 category:            Web
 build-type:          Simple
 extra-source-files:  README.md
