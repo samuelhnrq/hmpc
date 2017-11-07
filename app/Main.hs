@@ -6,17 +6,19 @@ import Control.Monad (when)
 import System.Exit (die)
 import System.Environment (getArgs)
 import Control.Exception (catch, SomeException)
-import Hmpc.Operations
+import Hmpc.Operations 
+import Hmpc.Data
+import Hmpc.Networking
 
 main :: IO ()
-main = do
-  -- TODO: Configurable host and port
+main = do 
+  -- TODO: Configurable host and port 
   catch (connect "localhost" "6600" (\(mpdConn, _) -> do
-    mpdVer <- recv mpdConn buffSize
+    mpdVer <- recv mpdConn 1024
     when (isNothing mpdVer) $ die "Server isn't responding."
     args <- getArgs
     when (null args) $ die "Type the desired command"
-    currStatus <- status mpdConn
+    currStatus <- getStatus mpdConn
     _ <- handleCmd currStatus (head args) (tail args) mpdConn
     return ()  )) failedConnection
 
@@ -39,6 +41,6 @@ handleCmd _ "play" _ = play
 
 handleCmd _ "pause" _ = pause
 
-handleCmd sts "toggle" _ = if (getState sts) == Play then pause else play
+handleCmd sts "toggle" _ = if state sts == Play then pause else play
 
 handleCmd _ _ _ = \_ -> return False
